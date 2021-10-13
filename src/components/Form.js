@@ -6,14 +6,19 @@ class Form extends Component {
         
         /*
             TODO - set initial state for link name and URL 
-
         */
+       this.state ={
+           name: '',
+           URL:''
+        }
     }
 
     handleChange = event => {
         /*
             TODO - Logic for changing state based on form changes
         */
+       console.log("handleChange :", event.target.name, event.target.value)
+       this.setState({[event.target.name]: event.target.value})
     }
 
     onFormSubmit = (event) => {
@@ -23,7 +28,14 @@ class Form extends Component {
         /*
             TODO - Logic for calling props to handle submission and setting state changes
         */
-
+       if(this.state.name === '' || this.state.URL === ''){
+           alert("Text fields cannot be left empty. ")
+           this.setState({name:'', URL:''})
+       } else {
+           this.props.submitForm(this.state)
+           console.log('onFormSubmit:' , this.state)
+           this.setState({name:'', URL:''})
+       }
     }
 
     render() {
@@ -31,6 +43,11 @@ class Form extends Component {
         return(
             <form>
                 {/* TODO - Logic for returning a form element with labels and inputs for link name and URL */}
+                <h6>Name</h6>
+                <input type='text' name='name' value={this.state.name} onChange={this.handleChange}/>
+                <h5>URL</h5>
+                <input type='text' name='URL' value={this.state.URL} onChange={this.handleChange}/>
+                <button onClick={this.onFormSubmit}> Submit</button>
             </form>
         )
     
